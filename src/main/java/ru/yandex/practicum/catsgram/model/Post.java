@@ -1,5 +1,7 @@
 package ru.yandex.practicum.catsgram.model;
 
+
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
