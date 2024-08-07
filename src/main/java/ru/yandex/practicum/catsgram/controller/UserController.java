@@ -1,6 +1,8 @@
 package ru.yandex.practicum.catsgram.controller;
 
 import exception.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
@@ -33,8 +35,9 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
-        return userService.create(user);
+    public ResponseEntity<User> create(@RequestBody User newUser) {
+        User user = userService.create(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PutMapping
