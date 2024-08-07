@@ -4,12 +4,10 @@ import exception.ConditionsNotMetException;
 import exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.model.Post;
+import ru.yandex.practicum.catsgram.model.SortOrder;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -20,8 +18,16 @@ public class PostService {
         this.userService = userService;
     }
 
-    public Collection<Post> findAll() {
-        return posts.values();
+    public Collection<Post> findAll(int from, int size, String sort) {
+        ArrayList<Post> postsList = new ArrayList<>(posts.values());
+        if (SortOrder.from(sort) == SortOrder.ASCENDING) {
+            Collections.sort(postsList);
+        } else {
+            postsList.sort(Collections.reverseOrder());
+        }
+
+
+        return postsList.stream().skip(from).limit(size).toList();
     }
 
     public Post create(Post post) {
